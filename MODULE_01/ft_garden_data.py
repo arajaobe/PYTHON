@@ -9,17 +9,19 @@ class Plant:
 	def show(self):
 		return f"{self.name}: {self.height}cm, {self.age} days old"
 
-def display_plants(item1, item2, item3):
+def display_plants(plants):
 	print("=== Garden Plant Registry ===")
-	print(item1.show())
-	print(item2.show())
-	print(item3.show())
+	for plant in plants:
+		print(plant.show())
 
 def main():
-	plant1 = Plant('Rose', 25, 30)
-	plant2 = Plant('Sunflower', 80, 45)
-	plant3 = Plant('Cactus', 15, 120)
-	display_plants(plant1, plant2, plant3)
+	plants = [
+			Plant('Rose', 25, 30),
+			Plant('Sunflower', 80, 45),
+			Plant('Cactus', 15, 120)
+	]
+
+	display_plants(plants)
 
 
 if __name__ == "__main__":
