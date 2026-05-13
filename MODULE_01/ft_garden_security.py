@@ -1,0 +1,63 @@
+
+class Plant:
+
+	def __init__(self, name: str, height_cm: float, age_d: int):
+		self.name = name
+		self._height = height_cm
+		self._age = age_d
+		if self._height < 0 or self._age < 0:
+			print("Error, value can't be negative")
+	def get_height(self):
+		return self._height
+
+	def get_age(self):
+		return self._age
+
+	def set_height(self, new_height):
+		if new_height < 0:
+			print(f"{self.name}: Error, height can't be negative")
+			print("Height update rejected")
+		else:
+			self._height = new_height
+			print("Height updated successfully !")
+			print(f"Age updated: {self.get_height():.1f} days")
+
+
+	def set_age(self, new_age):
+		if new_age < 0:
+			print(f"{self.name}: Error, age can't be negative")
+			print("Age update rejected")
+		else:
+			self._age = new_age
+			print("Age updated successfully !")
+			print(f"Age updated: {self.get_age()} days")
+
+
+	def show(self):
+		return f"{self.name}: {self.get_height():.1f}cm, {self.get_age()} days old"
+
+
+def update_plants(plants, height_value, age_value):
+	print(f"Plant created: {plants.name} {plants.get_height():.1f}, {plants.get_age()} days old")
+	print("\n")
+	plants.set_height(height_value)
+	plants.set_age(age_value)
+	print("\n")
+	print(f"Current state: {plants.show()}")
+
+
+def display_created_plants(plants, height_value=0, age_value=0):
+	print("=== Garden Security System ===")
+	for plant in plants:
+		update_plants(plant, height_value, age_value)
+
+def main():
+	plants = [
+			Plant('Rose', 25, -6),
+	]
+	if plants[0].get_height() > 0 and plants[0].get_age() > 0:
+		display_created_plants(plants, 55.3666, 36)
+
+
+if __name__ == "__main__":
+	main()
