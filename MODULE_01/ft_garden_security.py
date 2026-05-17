@@ -20,7 +20,7 @@ class Plant:
 		else:
 			self._height = new_height
 			print("Height updated successfully !")
-			print(f"Age updated: {self.get_height():.1f} days")
+			print(f"New height: {self.get_height():.1f} days")
 
 
 	def set_age(self, new_age):
@@ -30,33 +30,31 @@ class Plant:
 		else:
 			self._age = new_age
 			print("Age updated successfully !")
-			print(f"Age updated: {self.get_age()} days")
+			print(f"New age: {self.get_age()} days")
 
 
 	def show(self):
 		return f"{self.name}: {self.get_height():.1f}cm, {self.get_age()} days old"
 
 
-def update_plants(plants, height_value, age_value):
-	print(f"Plant created: {plants.name} {plants.get_height():.1f}, {plants.get_age()} days old")
-	print("\n")
+def update_plants(plants, height_value=0, age_value=0):
 	plants.set_height(height_value)
 	plants.set_age(age_value)
 	print("\n")
+
+
+def display_created_plants(plants):
+	print("=== Garden Security System ===")
+	print(f"Plant created: {plants.show()}")
+	print("\n")
+	update_plants(plants, 56, 23)
+	update_plants(plants, 69, 233)
 	print(f"Current state: {plants.show()}")
 
-
-def display_created_plants(plants, height_value=0, age_value=0):
-	print("=== Garden Security System ===")
-	for plant in plants:
-		update_plants(plant, height_value, age_value)
-
 def main():
-	plants = [
-			Plant('Rose', 25, -6),
-	]
-	if plants[0].get_height() > 0 and plants[0].get_age() > 0:
-		display_created_plants(plants, 55.3666, 36)
+	plants = Plant('Rose', 25, 89)
+	if plants.get_height() > 0 and plants.get_age() > 0:
+		display_created_plants(plants)
 
 
 if __name__ == "__main__":

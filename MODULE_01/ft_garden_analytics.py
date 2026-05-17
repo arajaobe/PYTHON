@@ -4,6 +4,7 @@ class Plant:
 		self.name = name
 		self.height = height_cm
 		self.age = age_d
+		self._stats = self.Stats()
 
 	def show(self):
 		return f"{self.name}: {self.height:.1f}cm, {self.age} days old"
@@ -13,6 +14,28 @@ class Plant:
 
 	def age_one_day(self):
 		self.age += 1
+
+	@staticmethod
+	def check_age(age):
+		if age > 365 :
+			return True
+		return False
+
+	@classmethod
+	def anonymous_plant(cls):
+		return cls("Unknown plant", 0.0, 0)
+
+	class Stats:
+		def __init__(self):
+			self.grow_call = 0
+			self.age_call = 0
+			self.show_call = 0
+
+		def display_stats(self):
+			return f"Stats: {self.grow_call} grow, {self.age_call} age, {self.show_call} show"
+
+
+
 
 class Flower(Plant):
 	def __init__(self, name: str, height_cm: float, age_d: int, color: str):
@@ -29,6 +52,9 @@ class Flower(Plant):
 			return(f"{base}\nColor: {self.color}\n{self.name} is blooming beautifully!")
 		else:
 			return(f"{base}\nColor: {self.color}\n{self.name} has not bloomed yet")
+
+class Seed(Flower):
+	pass
 
 
 class Tree(Plant):
@@ -59,39 +85,3 @@ class Vegetable(Plant):
 		return f"{base}\nHarvest season: {self.harvest_season}\nNutritional value: {self.nutritional_value}"
 
 
-def flower_state(plants, result=False):
-	if result:
-		print("[asking the rose to bloom]")
-	print(plants.show())
-
-def display_plants(flower_plant, tree_plant, vegetable_plant):
-	print("=== Garden Plant Types ===")
-	print("=== Flower")
-	flower_state(flower_plant)
-	result = True
-	flower_plant.bloom()
-	flower_state(flower_plant, result)
-	print("\n")
-	print("=== Tree")
-	print(tree_plant.show())
-	print("[asking the oak to produce shade]")
-	print(tree_plant.produce_shade())
-	print("\n")
-	print("=== Vegetable")
-	print(vegetable_plant.show())
-	print("[make tomato grow and age for 20 days]")
-	for _ in range(1, 21):
-		vegetable_plant.grow()
-		vegetable_plant.age_one_day()
-	print(vegetable_plant.show())
-
-
-
-def main():
-	plant1 = Flower("Rose", 30, 25, "Red")
-	plant2 = Tree("Oak", 200.0, 365, 5.0)
-	plant3 = Vegetable("Tomato", 5.0, 10, "April")
-	display_plants(plant1, plant2, plant3)
-
-if __name__ == "__main__":
-	main()
