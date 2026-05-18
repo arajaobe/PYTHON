@@ -84,4 +84,6 @@ class Vegetable(Plant):
 		base = super().show()
 		return f"{base}\nHarvest season: {self.harvest_season}\nNutritional value: {self.nutritional_value}"
 
-
+def display_stats(plants):
+	print (f"statitics for {plants.name}")
+	print (plants.display_stats)
