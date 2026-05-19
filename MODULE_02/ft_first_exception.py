@@ -9,7 +9,7 @@ def test_temperature(temp_str: str):
 		result = input_temperature(temp_str)
 		print(f"Temperature is now {result}°C")
 	except ValueError as e:
-		print(f"Caught input_temperature error: {e}")
+		print("Caught input_temperature error:", e)
 
 def main():
 	print("=== Garden Temperature ===\n")
