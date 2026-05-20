@@ -17,19 +17,17 @@ def list_to_int(value: str) -> int:
 	length = len(temp)
 	if length < 1:
 		return 0
-	i = 0
 	count = 0
-	int_list = [0] * length
+	int_list = []
 	for arg in temp:
 		try:
-			int_list[i] = input_list(arg)
+			int_list.append(input_list(arg))
 		except ValueError:
 			count += 1
 			print(f"Invalid parameter: '{arg}'")
 		except NegativeError as e:
 			count += 1
 			print(f"{e}: {arg}")
-		i += 1
 	if count != length:
 		return (int_list)
 	else:
