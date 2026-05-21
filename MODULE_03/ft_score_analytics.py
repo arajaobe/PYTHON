@@ -12,7 +12,7 @@ def input_list(temp_str: str) -> int:
 		return temp_int
 
 
-def list_to_int(value: str) -> int:
+def list_to_int(value: list[str]) -> int | list[int]:
 	temp = value[1:]
 	length = len(temp)
 	if length < 1:
@@ -34,7 +34,7 @@ def list_to_int(value: str) -> int:
 		return 0
 
 
-def display_scores(value: int):
+def display_scores(value: list[int]) -> None:
 	length = len(value)
 	max_val = max(value)
 	min_val = min(value)
