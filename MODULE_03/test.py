@@ -55,25 +55,42 @@ print("Arguments:", int_lst)
 #dicts = {"sword" : 65, "shield" : 5}
 dicts = {}
 
-value = " sword:1 potion:5 shield:2 armor:3 helmet:1 sword:2 hello key:value"
+value = " sword:1 potion:5 shield:2 armor:3 potion:6 helmet:1 sword:6 hello key:value"
 liste = value.split()
+#print(liste)
 list_of_list = []
-
+list_of_key = []
+list_of_value = []
 for arg in liste:
 	lst1 = arg.split(':')
 	if len(lst1) != 2:
 		print(f"invalid parameter: '{lst1[0]}'")
 	else:
 		second_list = []
-		second_list.append(lst1[0])
+		if lst1[0] in list_of_key:
+			print(f"Redundant item '{lst1[0]}' - discarding")
+		else:
+			second_list.append(lst1[0])
+		list_of_key.append(lst1[0])
 		try:
 			second_list.append(int(lst1[1]))
 		except ValueError as e:
 			print("Quantity error for 'key':", e)
 		if len(second_list) == 2:
 			list_of_list.append(second_list)
+			list_of_value.append(int(lst1[1]))
+
+
+def max_int(value: list[int])->int:
+	max = value[0]
+
+	for arg in value:
+		if arg > max:
+			max = arg
+
 
 d = dict(list_of_list)
+print(sum(list_of_value))
 
 print(d)
 
@@ -97,3 +114,4 @@ print(d)
 #dicts = dict(a)
 #print(dicts)
 
+d = {"name": "Charlie", "age" : 58}
