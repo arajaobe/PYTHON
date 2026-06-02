@@ -8,7 +8,7 @@ def parse_items(value: str)->dict[str, int]:
 	list_of_value = []
 	for arg in liste:
 		lst1 = arg.split(':')
-		if len(lst1) != 2:
+		if len(lst1) != 2 or not lst1[0]:
 			print(f"invalid parameter: '{lst1[0]}'")
 		else:
 			second_list = []
