@@ -36,7 +36,7 @@ def main():
 	result = secure_archive("ancient_fragment.txt")
 	print(result)
 	print("\n")
-	result = secure_archive("result.txt", "w", "bobo")
+	result = secure_archive("result.txt", "w", "bonjour")
 	print(result)
 
 

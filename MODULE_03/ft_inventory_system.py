@@ -62,6 +62,8 @@ def main():
 		print("Inventory is empty:", value_dict)
 	else :
 		value_dict = parse_items(value_str)
+		if not value_dict:
+			return
 		list_of_keys = []
 		list_of_values = []
 		for arg in value_dict:

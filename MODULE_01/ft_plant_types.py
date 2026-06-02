@@ -7,7 +7,7 @@
 #   By: arajaobe <arajaobe@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/05/28 13:03:50 by arajaobe            #+#    #+#            #
-#   Updated: 2026/05/28 14:29:01 by arajaobe           ###   ########.fr      #
+#   Updated: 2026/06/02 13:09:53 by arajaobe           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -18,14 +18,15 @@ class Plant:
         self.height = height_cm
         self.age = age_d
 
-    def show(self):
+    def show(self) -> str:
         return f"{self.name}: {self.height:.1f}cm, {self.age} days old"
 
-    def grow(self, amount: float = 0.8):
+    def grow(self, amount: float = 0.8) -> None:
         self.height += amount
 
-    def age_one_day(self):
+    def age_one_day(self) -> None:
         self.age += 1
+
 
 class Flower(Plant):
     def __init__(self, name: str, height_cm: float, age_d: int, color: str):
@@ -33,50 +34,59 @@ class Flower(Plant):
         self.color = color
         self.bloomed = False
 
-    def bloom(self):
+    def bloom(self) -> None:
         self.bloomed = True
 
-    def show(self):
+    def show(self) -> str:
         base = super().show()
         if self.bloomed:
-            return(f"{base}\nColor: {self.color}\n{self.name} is blooming beautifully!")
+            return ((f"{base}\nColor: {self.color}\n{self.name}"
+                    f" is blooming beautifully!"))
         else:
-            return(f"{base}\nColor: {self.color}\n{self.name} has not bloomed yet")
+            return ((f"{base}\nColor: {self.color}\n{self.name}"
+                    f" has not bloomed yet"))
 
 
 class Tree(Plant):
-    def __init__(self, name: str, height_cm: float, age_d: int, trunk_diameter: float):
+    def __init__(self, name: str, height_cm: float, age_d: int,
+                 trunk_diameter: float):
         super().__init__(name, height_cm, age_d)
         self.trunk_diameter = trunk_diameter
 
-    def produce_shade(self):
-        return f"Tree {self.name} now produces a shade of {self.height:.1f}m long and {self.trunk_diameter:.1f}cm wide"
+    def produce_shade(self) -> str:
+        return (f"Tree {self.name} now produces a shade of {self.height:.1f}m"
+                f" long and {self.trunk_diameter:.1f}cm wide")
 
-    def show(self):
+    def show(self) -> str:
         base = super().show()
         return f"{base}\nTrunk diameter: {self.trunk_diameter:.1f}cm"
 
+
 class Vegetable(Plant):
-    def __init__(self, name: str, height_cm: float, age_d: int, harvest_season: str):
+    def __init__(self, name: str, height_cm: float, age_d: int,
+                 harvest_season: str):
         super().__init__(name, height_cm, age_d)
         self.harvest_season = harvest_season
         self.nutritional_value = 0
 
-    def grow(self, amount: float = 2.1):
+    def grow(self, amount: float = 2.1) -> None:
         super().grow(amount)
         self.nutritional_value += 1
 
-    def show(self):
+    def show(self) -> str:
         base = super().show()
-        return f"{base}\nHarvest season: {self.harvest_season}\nNutritional value: {self.nutritional_value}"
+        return (f"{base}\nHarvest season: {self.harvest_season}\n"
+                f"Nutritional value: {self.nutritional_value}")
 
 
-def flower_state(plants, result=False):
+def flower_state(plants: Plant, result: bool = False) -> None:
     if result:
         print("[asking the rose to bloom]")
     print(plants.show())
 
-def display_plants(flower_plant, tree_plant, vegetable_plant):
+
+def display_plants(flower_plant: Flower, tree_plant: Tree,
+                   vegetable_plant: Vegetable) -> None:
     print("=== Garden Plant Types ===")
     print("=== Flower")
     flower_state(flower_plant)
@@ -97,11 +107,13 @@ def display_plants(flower_plant, tree_plant, vegetable_plant):
         vegetable_plant.age_one_day()
     print(vegetable_plant.show())
 
-def main():
+
+def main() -> None:
     plant1 = Flower("Rose", 30, 25, "Red")
     plant2 = Tree("Oak", 200.0, 365, 5.0)
     plant3 = Vegetable("Tomato", 5.0, 10, "April")
     display_plants(plant1, plant2, plant3)
+
 
 if __name__ == "__main__":
     main()
