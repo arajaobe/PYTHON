@@ -1,77 +1,68 @@
 
-
-#from abc import ABC
-import abc
 import typing
-
-#class Vehicle(abc.ABC):
-#	@abc.abstractmethod
-#	def go(self):
-#		pass
+import abc
 
 class DataProcessor(abc.ABC):
-	def __init__(self):
-		self.data: list[str] = []
-		self.index: int = 0
+    def __init__(self):
+        self.data: list[str] = []
+        self.index: int = 0
 
-	@abc.abstractmethod
-	def validate(self, data: typing.Any) -> bool:
-		pass
+    @abc.abstractmethod
+    def validate(self, data: typing.Any) -> bool:
+        pass
 
-	@abc.abstractmethod
-	def ingest(self, data: typing.Any) -> None:
-		pass
+    @abc.abstractmethod
+    def ingest(self, data: typing.Any) -> None:
+        pass
 
-	def output(self) -> tuple[int, str] :
-		index = self.index
-		value = self.data.pop(0)
-		self.index += 1
-		return (index, value)
-
-
+    def output(self) -> tuple[int, str] :
+        index = self.index
+        value = self.data.pop(0)
+        self.index += 1
+        return (index, value)
 
 
 class NumericProcessor(DataProcessor):
-	def validate(self, data: typing.Any) -> bool:
-		if not isinstance(data, int | float | list):
-			return False
-		if isinstance(data, list):
-			for item in data:
-				if not isinstance(item, (int, float)):
-					return False
-		return True
+    def validate(self, data: typing.Any) -> bool:
+        if not isinstance(data, int | float | list):
+            return False
+        if isinstance(data, list):
+            for item in data:
+                if not isinstance(item, (int, float)):
+                    return False
+        return True
 
-	def ingest(self, data: int | float | list) -> None:
-		if not self.validate(data):
-			raise Exception("Improper numeric data")
-		else:
-			if isinstance(data, list):
-				for word in data:
-					self.data.append(str(word))
-			else:
-				self.data.append(str(data))
-
+    def ingest(self, data: int | float | list) -> None:
+        if not self.validate(data):
+            raise Exception("Improper numeric data")
+        else:
+            if isinstance(data, list):
+                for word in data:
+                    self.data.append(str(word))
+            else:
+                self.data.append(str(data))
 
 
 class TextProcessor(DataProcessor):
-	def validate(self, data: typing.Any) -> bool:
-		if not isinstance(data, str | list):
-			return False
-		if isinstance(data, list):
-			for item in data:
-				if not isinstance(item, str):
-					return False
-		return True
+    def validate(self, data: typing.Any) -> bool:
+        if not isinstance(data, str | list):
+            return False
+        if isinstance(data, list):
+            for item in data:
+                if not isinstance(item, str):
+                    return False
+        return True
 
-	def ingest(self, data: str| list) -> None:
-		if not self.validate(data):
-			raise ("Improper text data")
-		else:
-			if isinstance(data, list):
-				for word in data:
-					self.data.append(str(word))
-			else:
-				self.data.append(str(data))
+    def ingest(self, data: str| list) -> None:
+        if not self.validate(data):
+            raise ("Improper text data")
+        else:
+            if isinstance(data, list):
+                for word in data:
+                    self.data.append(str(word))
+            else:
+                self.data.append(str(data))
+
 
 class LogProcessor(DataProcessor):
     def validate(self, data: typing.Any) -> bool:
@@ -92,8 +83,6 @@ class LogProcessor(DataProcessor):
         return False
 
 
-
-
     def ingest(self, data: dict | list) -> None:
         if not self.validate(data):
             raise ("Improper log data")
@@ -103,6 +92,7 @@ class LogProcessor(DataProcessor):
                     self.data.append(f"{d['log_level']}: {d['log_message']}")
             else:
                 self.data.append((f"{data['log_level']}: {data['log_message']}"))
+
 
 def main():
     print("=== Code Nexus - Data Processor ===\n")
@@ -159,9 +149,5 @@ def main():
         print(f"Log entry {i} : {value}")
 
 
-
-#print(res)
-
-
-main()
-
+if __name__ == "__main__":
+    main()
