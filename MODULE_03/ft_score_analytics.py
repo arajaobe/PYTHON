@@ -35,16 +35,19 @@ def list_to_int(value: list[str]) -> int | list[int]:
 
 
 def display_scores(value: list[int]) -> None:
-	length = len(value)
-	max_val = max(value)
-	min_val = min(value)
-	sum_val = sum(value)
-	print("Total players:", length)
-	print("Total score:", sum_val)
-	print(f"Average score: {(sum_val / length):.1f}")
-	print("High score:", max_val)
-	print("Low score:", min_val)
-	print("Score range:", max_val - min_val)
+    length = len(value)
+    max_val = max(value)
+    min_val = min(value)
+    sum_val = sum(value)
+    print("Total players:", length)
+    print("Total score:", sum_val)
+    try:
+        print(f"Average score: {(sum_val / length):.1f}")
+    except Exception as e:
+        print(f'Error: {e}')
+    print("High score:", max_val)
+    print("Low score:", min_val)
+    print("Score range:", max_val - min_val)
 
 
 def main():
