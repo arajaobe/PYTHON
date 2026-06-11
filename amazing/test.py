@@ -20,7 +20,7 @@ entry = tuple(map(int, cfg["ENTRY"].split(",")))
 exit = tuple(map(int, cfg["EXIT"].split(",")))
 output_file = cfg["OUTPUT_FILE"]
 perfect = cfg["PERFECT"].lower() == "true"
-name = cfg["NAME"]
+
 
 #print("Maze width:", width)
 #print("Maze height:", height)
@@ -34,29 +34,43 @@ name = cfg["NAME"]
 def hex_for_cell(north, east, south, west):
     """Convert wall booleans into hex digit."""
     value = (north << 0) | (east << 1) | (south << 2) | (west << 3)
-    return format(value, "X")  # hex digit
+    result = format(value, "X")
+    return result
 
 def generate_maze(width, height, entry, exit, perfect=True):
     maze = []
+    entry_x, entry_y = entry
+    exit_x, exit_y = exit
     for y in range(height):
         row = []
         for x in range(width):
-            # For simplicity: random walls
-            north = random.randint(0, 1)
-            east  = random.randint(0, 1)
-            south = random.randint(0, 1)
-            west  = random.randint(0, 1)
+            if (entry_x == x and entry_y == y) or (exit_x == x and exit_y == y):
+                north = 0
+                east  = 0
+                south = 0
+                west  = 0
+            else:
+            #north = random.randint(0, 1)
+            #east  = random.randint(0, 1)
+            #south = random.randint(0, 1)
+            #west  = random.randint(0, 1)
+                north = 1
+                east  = 1
+                south = 1
+                west  = 1
+            # WSEN
             row.append(hex_for_cell(north, east, south, west))
         maze.append("".join(row))
 
     # Build output lines
     output = []
     output.extend(maze)
-    output.append(f"{entry[0]},{entry[1]}")
-    output.append(f"{exit[0]},{exit[1]}")
-    output.append("EESS")  # placeholder path
+    #output.append(f"{entry[0]},{entry[1]}")
+    #output.append(f"{exit[0]},{exit[1]}")
+    #output.append("EESS")
 
-    return "\n".join(output)
+    #return "\n".join(output)
+    return "\n".join(maze)
 
 # Example usage with your config
 #width, height = 3, 3
