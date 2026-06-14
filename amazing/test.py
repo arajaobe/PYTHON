@@ -37,6 +37,26 @@ def hex_for_cell(north, east, south, west):
     result = format(value, "X")
     return result
 
+def cell_from_hex(hex_digit):
+    """Convert hex digit into 4 wall bits (N, E, S, W)."""
+    value = int(hex_digit, 16)  # convert hex string to integer
+
+    north = (value >> 0) & 1
+    east  = (value >> 1) & 1
+    south = (value >> 2) & 1
+    west  = (value >> 3) & 1
+
+    return north, east, south, west
+
+def generate_first_maze(width, height):
+    maze = []
+    for y in range(height):
+        row = []
+        for x in range(width):
+            row.append('F')
+        maze.append(row)
+    return maze
+
 def generate_maze(width, height, entry, exit, perfect=True):
     maze = []
     entry_x, entry_y = entry
@@ -60,7 +80,7 @@ def generate_maze(width, height, entry, exit, perfect=True):
                 west  = 1
             # WSEN
             row.append(hex_for_cell(north, east, south, west))
-        maze.append("".join(row))
+        maze.append(row)
 
     # Build output lines
     output = []
@@ -70,11 +90,29 @@ def generate_maze(width, height, entry, exit, perfect=True):
     #output.append("EESS")
 
     #return "\n".join(output)
-    return "\n".join(maze)
+    return maze
 
 # Example usage with your config
 #width, height = 3, 3
 #entry, exit = (0,0), (2,2)
 maze_text = generate_maze(width, height, entry, exit, perfect=True)
+maze_first_text = generate_first_maze(width, height)
+
+visited_cells = [[False for x in range(width)] for y in range(height)]
 
 print(maze_text)
+
+#print(maze_first_text)
+print(visited_cells)
+
+n, e, s, w = cell_from_hex('3')
+print(f"{n} {e} {s} {w}")
+
+hexvalue = hex_for_cell(1, 1, 1 , 0)
+print(hexvalue)
+#visited_cells = set()
+
+maze_text[1][0] = 'E'
+print(maze_text)
+
+#print(visited_cells)
