@@ -19,7 +19,7 @@ def main() -> None:
     print(f"Plant: {name}")
     print(f"Height: {height}cm")
     print(f"Age: {age} days")
-    print("\n")
+    print("")
     print("=== End of Program ===")
 
 

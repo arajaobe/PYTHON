@@ -13,11 +13,11 @@
 
 class Plant:
 
-    def __init__(self, name: str, height_cm: float, age_d: int,
+    def __init__(self, name: str, height: float, age: int,
                  growth_rate: float = 0.8):
         self.name = name
-        self.height = height_cm
-        self.age = age_d
+        self.height = height
+        self.age = age
         self.growth_rate = growth_rate
 
     def show(self) -> str:
@@ -38,11 +38,11 @@ def simulate_week_growth(plant: Plant) -> None:
     for day in range(1, 8):
         plant.age_day_one()
         plant.grow()
-        print(f"== Day {day} ===")
+        print(f"=== Day {day} ===")
         print(plant.show())
 
     final_height = plant.height - initial_height
-    print(f"Growth this week: {final_height:.1f} cm")
+    print(f"Growth this week: {final_height:.1f}cm")
 
 
 def main() -> None:

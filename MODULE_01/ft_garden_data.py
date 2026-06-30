@@ -12,10 +12,10 @@
 # ########################################################################### #
 
 class Plant:
-    def __init__(self, name: str, height_cm: float, age_d: int):
+    def __init__(self, name: str, height: float, age: int):
         self.name = name
-        self.height = height_cm
-        self.age = age_d
+        self.height = height
+        self.age = age
 
     def show(self) -> str:
         return f"{self.name}: {self.height}cm, {self.age} days old"
