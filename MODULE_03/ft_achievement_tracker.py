@@ -70,25 +70,21 @@ def main() -> None:
     print("")
 
     print(f"Only {player1.name} has:",
-          set.difference(player1.achievements,
-                         set.union(player2.achievements,
-                                   player3.achievements,
-                                   player4.achievements)))
+        player1.achievements.difference(
+            player2.achievements.union(player3.achievements,
+                                        player4.achievements)))
     print(f"Only {player2.name} has:",
-          set.difference(player2.achievements,
-                         set.union(player1.achievements,
-                                   player3.achievements,
-                                   player4.achievements)))
+        player2.achievements.difference(
+            player1.achievements.union(player3.achievements,
+                                        player4.achievements)))
     print(f"Only {player3.name} has:",
-          set.difference(player3.achievements,
-                         set.union(player1.achievements,
-                                   player2.achievements,
-                                   player4.achievements)))
+        player3.achievements.difference(
+            player1.achievements.union(player2.achievements,
+                                        player4.achievements)))
     print(f"Only {player4.name} has:",
-          set.difference(player4.achievements,
-                         set.union(player2.achievements,
-                                   player3.achievements,
-                                   player1.achievements)))
+        player4.achievements.difference(
+            player2.achievements.union(player3.achievements,
+                                        player1.achievements)))
 
     print("")
 
