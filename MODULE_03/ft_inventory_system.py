@@ -1,96 +1,89 @@
 #!/usr/bin/env python3
+# ########################################################################### #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   ft_inventory_system.py                               :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: arajaobe <arajaobe@student.42antananarivo.   +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/07/26 12:42:10 by arajaobe            #+#    #+#            #
+#   Updated: 2026/07/26 13:05:44 by arajaobe           ###   ########.fr      #
+#                                                                             #
+# ########################################################################### #
+
+
 import sys
 
-def parse_items(value: str)->dict[str, int]:
-    liste = value.split()
-    list_of_list = []
-    list_of_key = []
-    list_of_value = []
-    for arg in liste:
-        lst1 = arg.split(':')
-        if len(lst1) != 2 or not lst1[0]:
-            print(f"invalid parameter: '{lst1[0]}'")
-        else:
-            second_list = []
-            if lst1[0] in list_of_key:
-                print(f"Redundant item '{lst1[0]}' - discarding")
-            else:
-                second_list.append(lst1[0])
-            list_of_key.append(lst1[0])
-            try:
-                second_list.append(int(lst1[1]))
-            except ValueError as e:
-                print(f"Quantity error for '{lst1[0]}':", e)
-            if len(second_list) == 2:
-                list_of_list.append(second_list)
-                list_of_value.append(int(lst1[1]))
-    d = dict(list_of_list)
+
+def parse_items(args: list[str]) -> dict[str, int]:
+    d: dict[str, int] = {}
+    for arg in args:
+        lst = arg.split(':')
+        if len(lst) != 2 or not lst[0] or not lst[1]:
+            print(f"Error - invalid parameter '{arg}'")
+            continue
+        if lst[0] in d.keys():
+            print(f"Redundant item '{lst[0]}' - discarding")
+            continue
+        try:
+            d.update({lst[0]: int(lst[1])})
+        except ValueError as e:
+            print(f"Quantity error for '{lst[0]}':", e)
     return d
 
-def max_int(value: list[int])->int:
-    max = value[0]
 
+def max_int(value: list[int]) -> int:
+    maximum = value[0]
     for arg in value[1:]:
-        if arg > max:
-            max = arg
-    return max
+        if arg > maximum:
+            maximum = arg
+    return maximum
 
 
-def min_int(value: list[int])->int:
-    min = value[0]
-
+def min_int(value: list[int]) -> int:
+    minimum = value[0]
     for arg in value[1:]:
-        if arg < min:
-            min = arg
-    return min
-
-def find_key(value_str: list[str], value_int: list[int], number = int)->str:
-    res = -1
-
-    for arg in value_int:
-        res += 1
-        if arg == number:
-            break
-    return value_str[res]
+        if arg < minimum:
+            minimum = arg
+    return minimum
 
 
-def main():
+def find_key(keys: list[str], values: list[int], number: int) -> str:
+    for i in range(len(keys)):
+        if values[i] == number:
+            return keys[i]
+    return ""
+
+
+def main() -> None:
     print("=== Inventory System Analysis ===")
-    value_dict = {}
-    value_str = ' '.join(sys.argv[1:])
-    if len(value_str) < 1:
-        print("Inventory is empty:", value_dict)
-    else :
-        value_dict = parse_items(value_str)
-        if not value_dict:
-            print("Inventory is empty:", value_dict)
-            return
-        list_of_keys = []
-        list_of_values = []
-        for arg in value_dict:
-            list_of_keys.append(arg)
+    if len(sys.argv) < 2:
+        print("Inventory is empty: {}")
+        return
+    value_dict = parse_items(sys.argv[1:])
+    if not value_dict:
+        print("Inventory is empty: {}")
+        return
+    list_of_keys = list(value_dict.keys())
+    list_of_values = list(value_dict.values())
+    total = sum(list_of_values)
+    print("Got inventory:", value_dict)
+    print("Item list:", list_of_keys)
+    print(f"Total quantity of the {len(list_of_keys)} items:", total)
+    for i in range(len(list_of_keys)):
+        print(f"Item {list_of_keys[i]} represents "
+              f"{round((list_of_values[i] / total) * 100, 1)}%")
+    max_val = max_int(list_of_values)
+    min_val = min_int(list_of_values)
+    print(f"Item most abundant: {find_key(list_of_keys,
+                                          list_of_values, max_val)}"
+          f" with quantity {max_val}")
+    print(f"Item least abundant: {find_key(list_of_keys,
+                                           list_of_values, min_val)}"
+          f" with quantity {min_val}")
+    value_dict.update({"magic_item": 1})
+    print("Updated inventory:", value_dict)
 
-        for arg in value_dict.values():
-            list_of_values.append(arg)
-
-        total = sum(list_of_values)
-        print("Got inventory:",value_dict)
-        print("Item list:", list_of_keys)
-        print(f"Total quantity of the {len(list_of_keys)} items:", total)
-
-        i  = 0
-        for arg in list_of_keys:
-            print(f"Item {arg} represents {round((list_of_values[i] / total) * 100, 1)}%")
-            i += 1
-        max_val = max_int(list_of_values)
-        min_val = min_int(list_of_values)
-        print(f"Item most abundant: {find_key(list_of_keys, list_of_values, max_val)} with quantity {max_val}")
-        print(f"Item least abundant: {find_key(list_of_keys, list_of_values, min_val)} with quantity {min_val}")
-
-        value_dict.update({"magic item" : 1})
-
-        print("Updated inventory:", value_dict)
 
 if __name__ == "__main__":
     main()
-

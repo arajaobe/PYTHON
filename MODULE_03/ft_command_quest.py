@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
+# ########################################################################### #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   ft_command_quest.py                                  :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: arajaobe <arajaobe@student.42antananarivo.   +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/07/26 12:41:13 by arajaobe            #+#    #+#            #
+#   Updated: 2026/07/26 12:58:02 by arajaobe           ###   ########.fr      #
+#                                                                             #
+# ########################################################################### #
+
 import sys
+
 
 def main() -> None:
     arguments = sys.argv

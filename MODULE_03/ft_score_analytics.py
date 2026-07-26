@@ -1,9 +1,22 @@
+#!/usr/bin/env python3
+# ########################################################################### #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   ft_score_analytics.py                                :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: arajaobe <arajaobe@student.42antananarivo.   +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/07/26 12:41:30 by arajaobe            #+#    #+#            #
+#   Updated: 2026/07/26 13:23:53 by arajaobe           ###   ########.fr      #
+#                                                                             #
+# ########################################################################### #
+
 import sys
 
 
 def list_to_int(value: list[str]) -> list[int]:
     temp = value[1:]
-    int_list = []
+    int_list: list[int] = []
     for arg in temp:
         try:
             int_list = int_list + [int(arg)]
@@ -34,11 +47,12 @@ def main() -> None:
     args = sys.argv
     int_lst = list_to_int(args)
     if not int_lst:
-        print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
+        print(
+            "No scores provided. "
+            "Usage: python3 ft_score_analytics.py <score1> <score2> ...")
     else:
         display_scores(int_lst)
 
 
 if __name__ == "__main__":
     main()
-
