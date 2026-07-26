@@ -7,7 +7,7 @@
 #   By: arajaobe <arajaobe@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/07/26 12:41:10 by arajaobe            #+#    #+#            #
-#   Updated: 2026/07/26 12:57:09 by arajaobe           ###   ########.fr      #
+#   Updated: 2026/07/26 15:02:20 by arajaobe           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -70,21 +70,24 @@ def main() -> None:
     print("")
 
     print(f"Only {player1.name} has:",
-        player1.achievements.difference(
-            player2.achievements.union(player3.achievements,
-                                        player4.achievements)))
+          player1.achievements.difference(
+              player2.achievements.union(player3.achievements,
+                                         player4.achievements)))
+
     print(f"Only {player2.name} has:",
-        player2.achievements.difference(
-            player1.achievements.union(player3.achievements,
-                                        player4.achievements)))
+          player2.achievements.difference(
+              player1.achievements.union(player3.achievements,
+                                         player4.achievements)))
+
     print(f"Only {player3.name} has:",
-        player3.achievements.difference(
-            player1.achievements.union(player2.achievements,
-                                        player4.achievements)))
+          player3.achievements.difference(
+              player1.achievements.union(player2.achievements,
+                                         player4.achievements)))
+
     print(f"Only {player4.name} has:",
-        player4.achievements.difference(
-            player2.achievements.union(player3.achievements,
-                                        player1.achievements)))
+          player4.achievements.difference(
+              player2.achievements.union(player3.achievements,
+                                         player1.achievements)))
 
     print("")
 

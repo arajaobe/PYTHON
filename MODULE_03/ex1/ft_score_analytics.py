@@ -7,7 +7,7 @@
 #   By: arajaobe <arajaobe@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/07/26 12:41:30 by arajaobe            #+#    #+#            #
-#   Updated: 2026/07/26 13:23:53 by arajaobe           ###   ########.fr      #
+#   Updated: 2026/07/26 15:46:32 by arajaobe           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -19,7 +19,11 @@ def list_to_int(value: list[str]) -> list[int]:
     int_list: list[int] = []
     for arg in temp:
         try:
-            int_list = int_list + [int(arg)]
+            score = int(arg)
+            if score < 0:
+                print(f"Invalid parameter: '{arg}'")
+            else:
+                int_list = int_list + [int(arg)]
         except ValueError:
             print(f"Invalid parameter: '{arg}'")
     return int_list

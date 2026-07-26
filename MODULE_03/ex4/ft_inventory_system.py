@@ -7,7 +7,7 @@
 #   By: arajaobe <arajaobe@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/07/26 12:42:10 by arajaobe            #+#    #+#            #
-#   Updated: 2026/07/26 13:05:44 by arajaobe           ###   ########.fr      #
+#   Updated: 2026/07/26 16:38:09 by arajaobe           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -25,10 +25,14 @@ def parse_items(args: list[str]) -> dict[str, int]:
         if lst[0] in d.keys():
             print(f"Redundant item '{lst[0]}' - discarding")
             continue
+        res = lst[0].strip()
+        if not res:
+            print(f"Error - invalid parameter '{arg[0]}'")
+            continue
         try:
-            d.update({lst[0]: int(lst[1])})
+            d.update({lst[0].strip(): int(lst[1])})
         except ValueError as e:
-            print(f"Quantity error for '{lst[0]}':", e)
+            print(f"Quantity error for '{lst[0].strip()}':", e)
     return d
 
 

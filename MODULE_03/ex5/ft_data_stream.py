@@ -7,7 +7,7 @@
 #   By: arajaobe <arajaobe@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/07/26 12:42:31 by arajaobe            #+#    #+#            #
-#   Updated: 2026/07/26 13:05:00 by arajaobe           ###   ########.fr      #
+#   Updated: 2026/07/26 15:36:43 by arajaobe           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -24,11 +24,12 @@ def gen_event() -> typing.Generator[tuple[str, str], None, None]:
 
 
 def consume_event(
-    value: list[tuple[str, str]]
-) -> typing.Generator[tuple[str, str], None, None]:
+    value: list[tuple[str, str]]) -> typing.Generator[
+        tuple[str, str], None, None]:
     while len(value) > 0:
-        result = random.choice(value)
-        value.remove(result)
+        index = random.randint(0, len(value) - 1)
+        result = value[index]
+        del value[index]
         yield result
 
 
