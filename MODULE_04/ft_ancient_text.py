@@ -2,10 +2,12 @@
 import sys
 import typing
 
-def read_file(f: typing.IO) -> None:
+def read_file(f: typing.IO[str]) -> str:
+    content = f.read()
     print("---\n")
-    print(f.read())
+    print(content)
     print("---")
+    return content
 
 def main() -> None:
     if len(sys.argv) != 2:

@@ -2,7 +2,7 @@
 import sys
 import typing
 
-def read_file(f: typing.IO) -> str:
+def read_file(f: typing.IO[str]) -> str:
     content = f.read()
     print("---\n")
     print(content)
@@ -28,7 +28,6 @@ def main() -> None:
     if len(sys.argv) != 2:
         print("Usage: ft_ancient_text.py <file>")
         return
-    content = ""
     filename = sys.argv[1]
     print("=== Cyber Archives Recovery & Preservation ===")
     print(f"Accessing file '{filename}'")

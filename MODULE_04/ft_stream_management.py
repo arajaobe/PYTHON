@@ -2,7 +2,7 @@
 import sys
 import typing
 
-def read_file(f: typing.IO) -> str:
+def read_file(f: typing.IO[str]) -> str:
     content = f.read()
     print("---\n")
     print(content)
@@ -15,6 +15,7 @@ def transform(content: str) -> str:
     new_content = [line + "#" for line in lines if line]
     return "\n".join(new_content)
 
+
 def save_file(filename: str, content: str) -> None:
     print(f"Saving data to '{filename}'")
     f = open(filename, "w")
@@ -22,12 +23,12 @@ def save_file(filename: str, content: str) -> None:
     f.close()
     print(f"Data saved in file '{filename}'.")
 
+
 def main() -> None:
     if len(sys.argv) != 2:
         sys.stderr.write("[STDERR] Usage: ft_ancient_text.py <file>\n")
         sys.stderr.flush()
         return
-    content = ""
     filename = sys.argv[1]
     sys.stdout.write("=== Cyber Archives Recovery & Preservation ===\n")
     sys.stdout.write(f"Accessing file '{filename}'\n")
@@ -56,7 +57,8 @@ def main() -> None:
             sys.stderr.flush()
             print("Data not saved.")
     else:
-        print("Data not saved.")
+        print("Not saving data.")
+
 
 if __name__ == "__main__":
     main()
