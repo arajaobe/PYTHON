@@ -3,7 +3,7 @@ import typing
 import abc
 
 class DataProcessor(abc.ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         self._data: list[str] = []
         self.index: int = 0
 
@@ -25,7 +25,7 @@ class DataProcessor(abc.ABC):
 
 class NumericProcessor(DataProcessor):
     def validate(self, data: typing.Any) -> bool:
-        if not isinstance(data, int | float | list):
+        if not isinstance(data, (int, float, list)):
             return False
         if isinstance(data, list):
             for item in data:
@@ -33,20 +33,19 @@ class NumericProcessor(DataProcessor):
                     return False
         return True
 
-    def ingest(self, data: int | float | list) -> None:
+    def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
             raise Exception("Improper numeric data")
+        if isinstance(data, list):
+            for word in data:
+                self._data.append(str(word))
         else:
-            if isinstance(data, list):
-                for word in data:
-                    self._data.append(str(word))
-            else:
-                self._data.append(str(data))
+            self._data.append(str(data))
 
 
 class TextProcessor(DataProcessor):
     def validate(self, data: typing.Any) -> bool:
-        if not isinstance(data, str | list):
+        if not isinstance(data, (str, list)):
             return False
         if isinstance(data, list):
             for item in data:
@@ -54,45 +53,41 @@ class TextProcessor(DataProcessor):
                     return False
         return True
 
-    def ingest(self, data: str| list) -> None:
+    def ingest(self, data: str | list[str]) -> None:
         if not self.validate(data):
-            raise ("Improper text data")
+            raise Exception("Improper text data")
+        if isinstance(data, list):
+            for word in data:
+                self._data.append(word)
         else:
-            if isinstance(data, list):
-                for word in data:
-                    self._data.append(str(word))
-            else:
-                self._data.append(str(data))
+            self._data.append(data)
 
 
 class LogProcessor(DataProcessor):
     def validate(self, data: typing.Any) -> bool:
         if isinstance(data, dict):
             for k, v in data.items():
-                if not isinstance(k,str) or not isinstance(v, str):
+                if not isinstance(k, str) or not isinstance(v, str):
                     return False
             return True
-
         if isinstance(data, list):
             for d in data:
                 if not isinstance(d, dict):
                     return False
-            for k, v in d.items():
-                if not isinstance(k, str) or not isinstance(v, str):
-                    return False
+                for k, v in d.items():
+                    if not isinstance(k, str) or not isinstance(v, str):
+                        return False
             return True
         return False
 
-
-    def ingest(self, data: dict | list) -> None:
+    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if not self.validate(data):
-            raise ("Improper log data")
+            raise Exception("Improper log data")
+        if isinstance(data, list):
+            for d in data:
+                self._data.append(f"{d['log_level']}: {d['log_message']}")
         else:
-            if isinstance(data, list):
-                for d in data:
-                    self._data.append(f"{d['log_level']}: {d['log_message']}")
-            else:
-                self._data.append((f"{data['log_level']}: {data['log_message']}"))
+            self._data.append(f"{data['log_level']}: {data['log_message']}")
 
 class DataStream:
 
@@ -135,10 +130,10 @@ class DataStream:
 if __name__ == "__main__":
     print("=== Code Nexus - Data Stream ===")
     print("Initialize Data Stream...")
-
+    print("")
     stream = DataStream()
     stream.print_processors_stats()
-
+    print("")
     numeric = NumericProcessor()
     text = TextProcessor()
     log = LogProcessor()
@@ -157,14 +152,14 @@ if __name__ == "__main__":
     print(f"Send first batch of data on stream: {batch}")
     stream.process_stream(batch)
     stream.print_processors_stats()
-
+    print("")
     print("Registering other data processors")
     stream.register_processor(text)
     stream.register_processor(log)
     print("Send the same batch again")
     stream.process_stream(batch)
     stream.print_processors_stats()
-
+    print("")
     print("Consume some elements from the data processors: Numeric 3, Text 2, Log 1")
     for _ in range(3):
         numeric.output()
