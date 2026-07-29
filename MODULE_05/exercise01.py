@@ -4,7 +4,7 @@ import abc
 
 class DataProcessor(abc.ABC):
     def __init__(self) -> None:
-        self.data: list[str] = []
+        self._data: list[str] = []
         self.index: int = 0
 
     @abc.abstractmethod
@@ -17,7 +17,7 @@ class DataProcessor(abc.ABC):
 
     def output(self) -> tuple[int, str]:
         index = self.index
-        value = self.data.pop(0)
+        value = self._data.pop(0)
         self.index += 1
         return (index, value)
 
@@ -37,9 +37,9 @@ class NumericProcessor(DataProcessor):
             raise Exception("Improper numeric data")
         if isinstance(data, list):
             for word in data:
-                self.data.append(str(word))
+                self._data.append(str(word))
         else:
-            self.data.append(str(data))
+            self._data.append(str(data))
 
 
 class TextProcessor(DataProcessor):
@@ -57,9 +57,9 @@ class TextProcessor(DataProcessor):
             raise Exception("Improper text data")
         if isinstance(data, list):
             for word in data:
-                self.data.append(word)
+                self._data.append(word)
         else:
-            self.data.append(data)
+            self._data.append(data)
 
 
 class LogProcessor(DataProcessor):
@@ -84,9 +84,9 @@ class LogProcessor(DataProcessor):
             raise Exception("Improper log data")
         if isinstance(data, list):
             for d in data:
-                self.data.append(f"{d['log_level']}: {d['log_message']}")
+                self._data.append(f"{d['log_level']}: {d['log_message']}")
         else:
-            self.data.append(f"{data['log_level']}: {data['log_message']}")
+            self._data.append(f"{data['log_level']}: {data['log_message']}")
 
 
 def main() -> None:
@@ -98,7 +98,7 @@ def main() -> None:
     print("Trying to validate input 'Hello':", data_num.validate('Hello'))
     print("Test invalid ingestion of string 'foo' without prior validation:")
     try:
-        data_num.ingest("foo")  # type: ignore
+        data_num.ingest("foo")
     except Exception as e:
         print("Got exception:", e)
     valid_data_num = [1, 2, 3, 4, 5]
@@ -109,7 +109,7 @@ def main() -> None:
         i, value = data_num.output()
         print(f"Numeric value {i}: {value}")
 
-    print()
+    print("")
     print("Testing Text Processor...")
     data_text = TextProcessor()
     print("Trying to validate input '42':", data_text.validate(42))
@@ -120,7 +120,7 @@ def main() -> None:
     i, value = data_text.output()
     print(f"Text value {i}: {value}")
 
-    print()
+    print("")
     print("Testing Log Processor...")
     data_log = LogProcessor()
     print("Trying to validate input 'Hello':", data_log.validate("Hello"))
