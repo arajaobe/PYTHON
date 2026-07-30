@@ -16,6 +16,8 @@ class DataProcessor(abc.ABC):
         pass
 
     def output(self) -> tuple[int, str] :
+        if not self._data:
+            raise Exception("Empty data")
         index = self.index
         value = self._data.pop(0)
         self.index += 1
@@ -127,7 +129,7 @@ class DataStream:
             print(f"{name}: total {total} items processed, remaining {remaining} on processor")
 
 
-if __name__ == "__main__":
+def main() -> None:
     print("=== Code Nexus - Data Stream ===")
     print("")
     print("Initialize Data Stream...")
@@ -144,7 +146,7 @@ if __name__ == "__main__":
         [{"log_level": "WARNING", "log_message": "Telnet access! Use ssh instead"},
          {"log_level": "INFO", "log_message": "User wil is connected"}],
         42,
-        ["Hi", "five"]
+        ["Hi", "five"], "boboo", [2569]
     ]
 
     print("Registering Numeric Processor")
@@ -170,3 +172,8 @@ if __name__ == "__main__":
         log.output()
     stream.print_processors_stats()
 
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(e)

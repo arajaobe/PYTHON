@@ -12,7 +12,7 @@ def read_file(f: typing.IO[str]) -> str:
 
 def transform(content: str) -> str:
     lines = content.splitlines()
-    new_content = [line + "#" for line in lines if line]
+    new_content = [line + "#" for line in lines]
     return "\n".join(new_content)
 
 

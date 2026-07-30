@@ -12,12 +12,11 @@ def read_file(f: typing.IO[str]) -> str:
 
 def transform(content: str) -> str:
     lines = content.splitlines()
-    new_content = [line + "#" for line in lines if line]
+    new_content = [line + "#" for line in lines]
     return "\n".join(new_content)
 
 
 def save_file(filename: str, content: str) -> None:
-    print(f"Saving data to '{filename}'")
     f = open(filename, "w")
     f.write(content)
     f.close()
@@ -45,7 +44,11 @@ def main() -> None:
     print(f"---\n\n{new_content}\n\n---")
     new_filename = input("Enter new file name (or empty): ")
     if new_filename:
-        save_file(new_filename, new_content)
+        try:
+            print(f"Saving data to '{filename}'")
+            save_file(new_filename, new_content)
+        except Exception as e:
+            print(f"Error saving '{filename}': ", e)
     else:
         print("Not saving data.")
 

@@ -16,6 +16,8 @@ class DataProcessor(abc.ABC):
         pass
 
     def output(self) -> tuple[int, str]:
+        if not self._data:
+            raise Exception("Empty data")
         index = self.index
         value = self._data.pop(0)
         self.index += 1
@@ -152,7 +154,7 @@ class DataStream:
             print(f"{name}: total {total} items processed, remaining {remaining} on processor")
 
 
-if __name__ == "__main__":
+def main() -> None:
     print("=== Code Nexus - Data Pipeline ===")
     print("")
     print("Initialize Data Stream...")
@@ -214,3 +216,10 @@ if __name__ == "__main__":
     stream.output_pipeline(5, json_plugin)
     print("")
     stream.print_processors_stats()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(e)

@@ -16,6 +16,8 @@ class DataProcessor(abc.ABC):
         pass
 
     def output(self) -> tuple[int, str]:
+        if not self._data:
+            raise Exception("Empty data")
         index = self.index
         value = self._data.pop(0)
         self.index += 1
@@ -137,4 +139,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(e)
