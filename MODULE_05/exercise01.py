@@ -103,7 +103,7 @@ def main() -> None:
         data_num.ingest("foo")
     except Exception as e:
         print("Got exception:", e)
-    valid_data_num = [1, 2, 3, 4, 5]
+    valid_data_num: list[int | float] = [1, 2, 3, 4, 5]
     data_num.ingest(valid_data_num)
     print("Processing data:", valid_data_num)
     print("Extracting 3 values...")
