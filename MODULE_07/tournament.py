@@ -1,8 +1,8 @@
+#!/usr/bin/env python3
 
 from ex0 import FlameFactory, AquaFactory, CreatureFactory
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
 from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy
-#from ex0.creature import Creature
 from ex2.strategy import BattleStrategy
 
 
@@ -40,7 +40,11 @@ opponents0: list[tuple[CreatureFactory, BattleStrategy]] = [
     (FlameFactory(), NormalStrategy()),
     (HealingCreatureFactory(), DefensiveStrategy()),
 ]
-print(f" {[(type(f).__name__ + '+' + type(s).__name__.replace('Strategy', '')) for f, s in opponents0]}")
+compr_1 = [
+    (type(f).__name__ + '+' + type(s).__name__.replace('Strategy', ''))
+    for f, s in opponents0
+    ]
+print(f" {compr_1}")
 battle(opponents0)
 
 print()
@@ -50,7 +54,11 @@ opponents1: list[tuple[CreatureFactory, BattleStrategy]] = [
     (FlameFactory(), AggressiveStrategy()),
     (HealingCreatureFactory(), DefensiveStrategy()),
 ]
-print(f" {[(type(f).__name__ + '+' + type(s).__name__.replace('Strategy', '')) for f, s in opponents1]}")
+compr_2 = [
+    (type(f).__name__ + '+' + type(s).__name__.replace('Strategy', ''))
+    for f, s in opponents1
+    ]
+print(f" {compr_2}")
 battle(opponents1)
 
 print()
@@ -62,5 +70,9 @@ opponents2: list[tuple[CreatureFactory, BattleStrategy]] = [
     (HealingCreatureFactory(), DefensiveStrategy()),
     (TransformCreatureFactory(), AggressiveStrategy()),
 ]
-print(f" {[(type(f).__name__ + '+' + type(s).__name__.replace('Strategy', '')) for f, s in opponents2]}")
+compr_3 = [
+    (type(f).__name__ + '+' + type(s).__name__.replace('Strategy', ''))
+    for f, s in opponents2
+    ]
+print(f" {compr_3}")
 battle(opponents2)

@@ -3,11 +3,11 @@ import abc
 from ex0.creature import Creature
 
 
-
 class HealCapability(abc.ABC):
     @abc.abstractmethod
     def heal(self) -> str:
         pass
+
 
 class TransformCapability(abc.ABC):
     def __init__(self) -> None:
@@ -21,6 +21,7 @@ class TransformCapability(abc.ABC):
     def revert(self) -> str:
         pass
 
+
 class Sproutling(Creature, HealCapability):
     def __init__(self) -> None:
         Creature.__init__(self, "Sproutling", "Grass")
@@ -30,6 +31,7 @@ class Sproutling(Creature, HealCapability):
 
     def heal(self) -> str:
         return f"{self.name} heals itself for a small amount"
+
 
 class Bloomelle(Creature, HealCapability):
     def __init__(self) -> None:
@@ -59,7 +61,6 @@ class Shiftling(Creature, TransformCapability):
     def revert(self) -> str:
         self.transformed = False
         return f"{self.name} returns to normal."
-
 
 
 class Morphagon(Creature, TransformCapability):

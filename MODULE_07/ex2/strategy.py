@@ -25,8 +25,6 @@ class NormalStrategy(BattleStrategy):
         print(creature.attack())
 
 
-
-
 class AggressiveStrategy(BattleStrategy):
 
     def is_valid(self, creature: Creature) -> bool:
@@ -42,7 +40,6 @@ class AggressiveStrategy(BattleStrategy):
         print(creature.transform())
         print(creature.attack())
         print(creature.revert())
-
 
 
 class DefensiveStrategy(BattleStrategy):

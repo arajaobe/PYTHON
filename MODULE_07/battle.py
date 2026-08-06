@@ -1,5 +1,7 @@
+#!/usr/bin/env python3
 
 from ex0 import FlameFactory, AquaFactory, CreatureFactory
+
 
 def test_factory(factory: CreatureFactory) -> None:
     print("Testing factory")
@@ -9,6 +11,7 @@ def test_factory(factory: CreatureFactory) -> None:
     print(base.attack())
     print(evolved.describe())
     print(evolved.attack())
+
 
 def battle(factory1: CreatureFactory, factory2: CreatureFactory) -> None:
     print("Testing battle")
@@ -21,8 +24,10 @@ def battle(factory1: CreatureFactory, factory2: CreatureFactory) -> None:
     print(c1.attack())
     print(c2.attack())
 
-test_factory(FlameFactory())
-print()
-test_factory(AquaFactory())
-print()
-battle(FlameFactory(), AquaFactory())
+
+if __name__ == "__main__":
+    test_factory(FlameFactory())
+    print()
+    test_factory(AquaFactory())
+    print()
+    battle(FlameFactory(), AquaFactory())
