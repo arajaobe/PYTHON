@@ -16,6 +16,14 @@ class BattleStrategy(abc.ABC):
         pass
 
 
+class InvalidStrategyError(Exception):
+    def __init__(self, creature_name: str, strategy_name: str) -> None:
+        super().__init__(
+            f"Invalid Creature '{creature_name}' "
+            f"for this {strategy_name} strategy"
+        )
+
+
 class NormalStrategy(BattleStrategy):
 
     def is_valid(self, creature: Creature) -> bool:
@@ -32,10 +40,7 @@ class AggressiveStrategy(BattleStrategy):
 
     def act(self, creature: Creature) -> None:
         if not self.is_valid(creature):
-            raise Exception(
-                f"Invalid Creature '{creature.name}' "
-                f"for this aggressive strategy"
-            )
+            raise InvalidStrategyError(creature.name, "agressive")
         assert isinstance(creature, TransformCapability)
         print(creature.transform())
         print(creature.attack())
@@ -49,10 +54,8 @@ class DefensiveStrategy(BattleStrategy):
 
     def act(self, creature: Creature) -> None:
         if not self.is_valid(creature):
-            raise Exception(
-                f"Invalid Creature '{creature.name}' "
-                f"for this defensive strategy"
-            )
+            raise InvalidStrategyError(creature.name, "defensive")
         print(creature.attack())
         assert isinstance(creature, HealCapability)
         print(creature.heal())
+

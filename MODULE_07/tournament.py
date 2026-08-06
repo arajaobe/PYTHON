@@ -2,7 +2,7 @@
 
 from ex0 import FlameFactory, AquaFactory, CreatureFactory
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
-from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy
+from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy, InvalidStrategyError
 from ex2.strategy import BattleStrategy
 
 
@@ -30,7 +30,7 @@ def battle(
             try:
                 strategy1.act(c1)
                 strategy2.act(c2)
-            except Exception as e:
+            except InvalidStrategyError as e:
                 print(f"Battle error, aborting tournament: {e}")
                 return
 
