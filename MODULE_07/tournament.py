@@ -34,45 +34,45 @@ def battle(
                 print(f"Battle error, aborting tournament: {e}")
                 return
 
-
-print("Tournament 0 (basic)")
-opponents0: list[tuple[CreatureFactory, BattleStrategy]] = [
-    (FlameFactory(), NormalStrategy()),
-    (HealingCreatureFactory(), DefensiveStrategy()),
-]
-compr_1 = [
-    (type(f).__name__ + '+' + type(s).__name__.replace('Strategy', ''))
-    for f, s in opponents0
+if __name__ == "__main__":
+    print("Tournament 0 (basic)")
+    opponents0: list[tuple[CreatureFactory, BattleStrategy]] = [
+        (FlameFactory(), NormalStrategy()),
+        (HealingCreatureFactory(), DefensiveStrategy()),
     ]
-print(f" {compr_1}")
-battle(opponents0)
+    compr_1 = [
+        (type(f).__name__ + '+' + type(s).__name__.replace('Strategy', ''))
+        for f, s in opponents0
+        ]
+    print(f" {compr_1}")
+    battle(opponents0)
 
-print()
+    print()
 
-print("Tournament 1 (error)")
-opponents1: list[tuple[CreatureFactory, BattleStrategy]] = [
-    (FlameFactory(), AggressiveStrategy()),
-    (HealingCreatureFactory(), DefensiveStrategy()),
-]
-compr_2 = [
-    (type(f).__name__ + '+' + type(s).__name__.replace('Strategy', ''))
-    for f, s in opponents1
+    print("Tournament 1 (error)")
+    opponents1: list[tuple[CreatureFactory, BattleStrategy]] = [
+        (FlameFactory(), AggressiveStrategy()),
+        (HealingCreatureFactory(), DefensiveStrategy()),
     ]
-print(f" {compr_2}")
-battle(opponents1)
+    compr_2 = [
+        (type(f).__name__ + '+' + type(s).__name__.replace('Strategy', ''))
+        for f, s in opponents1
+        ]
+    print(f" {compr_2}")
+    battle(opponents1)
 
-print()
+    print()
 
 
-print("Tournament 2 (multiple)")
-opponents2: list[tuple[CreatureFactory, BattleStrategy]] = [
-    (AquaFactory(), NormalStrategy()),
-    (HealingCreatureFactory(), DefensiveStrategy()),
-    (TransformCreatureFactory(), AggressiveStrategy()),
-]
-compr_3 = [
-    (type(f).__name__ + '+' + type(s).__name__.replace('Strategy', ''))
-    for f, s in opponents2
+    print("Tournament 2 (multiple)")
+    opponents2: list[tuple[CreatureFactory, BattleStrategy]] = [
+        (AquaFactory(), NormalStrategy()),
+        (HealingCreatureFactory(), DefensiveStrategy()),
+        (TransformCreatureFactory(), AggressiveStrategy()),
     ]
-print(f" {compr_3}")
-battle(opponents2)
+    compr_3 = [
+        (type(f).__name__ + '+' + type(s).__name__.replace('Strategy', ''))
+        for f, s in opponents2
+        ]
+    print(f" {compr_3}")
+    battle(opponents2)
