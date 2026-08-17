@@ -83,7 +83,6 @@ def analyze_matrix() -> None:
         print(f"CRITICAL ERROR: Data stream corrupted during processing. ({e})")
         sys.exit(1)
 
-
 def main() -> None:
     """Main execution block handling the package logic."""
     if not check_programs():
