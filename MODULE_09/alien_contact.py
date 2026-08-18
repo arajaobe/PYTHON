@@ -5,7 +5,6 @@ from pydantic import BaseModel, Field, ValidationError, model_validator
 
 
 class ContactType(str, Enum):
-
     RADIO = "radio"
     VISUAL = "visual"
     PHYSICAL = "physical"
@@ -26,7 +25,6 @@ class AlienContact(BaseModel):
 
     @model_validator(mode="after")
     def validate_business_rules(self) -> "AlienContact":
-        """Applies multi-field custom business logic rules."""
         if not self.contact_id.startswith("AC"):
             raise ValueError("Contact ID must start with 'AC'")
 
@@ -37,7 +35,9 @@ class AlienContact(BaseModel):
             self.contact_type == ContactType.TELEPATHIC
             and self.witness_count < 3
         ):
-            raise ValueError("Telepathic contact requires at least 3 witnesses")
+            raise ValueError(
+                "Telepathic contact requires at least 3 witnesses"
+            )
 
         if self.signal_strength > 7.0 and not self.message_received:
             raise ValueError(
@@ -59,7 +59,7 @@ def main() -> None:
             signal_strength=8.5,
             duration_minutes=45,
             witness_count=5,
-            message_received="Greetings from Zeta Reticuli",
+            message_received="Hello From The Other Side",
             is_verified=False,
         )
         print("Valid contact report:")
@@ -89,8 +89,7 @@ def main() -> None:
     except ValidationError as e:
         print("Expected validation error:")
         for error in e.errors():
-            msg = error["msg"].replace("Value error, ", "")
-            print(msg)
+            print(error["msg"].replace("Value error, ", ""))
 
 
 if __name__ == "__main__":

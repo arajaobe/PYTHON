@@ -14,7 +14,6 @@ class Rank(str, Enum):
 
 
 class CrewMember(BaseModel):
-
     member_id: str = Field(min_length=3, max_length=10)
     name: str = Field(min_length=2, max_length=50)
     rank: Rank
@@ -25,7 +24,6 @@ class CrewMember(BaseModel):
 
 
 class SpaceMission(BaseModel):
-
     mission_id: str = Field(min_length=5, max_length=15)
     mission_name: str = Field(min_length=3, max_length=100)
     destination: str = Field(min_length=3, max_length=50)
@@ -41,8 +39,7 @@ class SpaceMission(BaseModel):
             raise ValueError("Mission ID must start with 'M'")
 
         has_leadership = any(
-            member.rank in (Rank.CAPTAIN, Rank.COMMANDER)
-            for member in self.crew
+            c.rank in (Rank.CAPTAIN, Rank.COMMANDER) for c in self.crew
         )
         if not has_leadership:
             raise ValueError(
@@ -50,22 +47,21 @@ class SpaceMission(BaseModel):
             )
 
         if self.duration_days > 365:
-            experienced_count = sum(
-                1 for member in self.crew if member.years_experience >= 5
-            )
-            if experienced_count < (len(self.crew) / 2):
+            experienced = sum(1 for c in self.crew if c.years_experience >= 5)
+            if experienced < (len(self.crew) / 2):
                 raise ValueError(
-                    "Long missions (> 365 days) need at least 50% experienced "
-                    "crew (5+ years)"
+                    "Long missions (> 365 days) need at least 50% "
+                    "experienced crew (5+ years)"
                 )
 
-        if any(not member.is_active for member in self.crew):
+        if not all(c.is_active for c in self.crew):
             raise ValueError("All crew members must be active")
 
         return self
 
 
 def main() -> None:
+    """Demonstrates space mission validation with nested crew structures."""
     print("Space Mission Crew Validation\n" + "=" * 41)
 
     try:
@@ -113,9 +109,8 @@ def main() -> None:
         print(f"Crew size: {len(valid_mission.crew)}")
         print("Crew members:")
         for member in valid_mission.crew:
-            print(
-                f"- {member.name} ({member.rank.value}) - {member.specialization}"
-            )
+            print(f"- {member.name} ({member.rank.value}) - "
+                  f"{member.specialization}")
         print()
     except ValidationError as e:
         print(f"Unexpected validation error: {e}\n")
@@ -138,22 +133,13 @@ def main() -> None:
                     age=30,
                     specialization="Security",
                     years_experience=4,
-                ),
-                CrewMember(
-                    member_id="CM005",
-                    name="Charlie Davis",
-                    rank=Rank.CADET,
-                    age=22,
-                    specialization="Research",
-                    years_experience=1,
-                ),
+                )
             ],
         )
     except ValidationError as e:
         print("Expected validation error:")
         for error in e.errors():
-            msg = error["msg"].replace("Value error, ", "")
-            print(msg)
+            print(error["msg"].replace("Value error, ", ""))
 
 
 if __name__ == "__main__":
