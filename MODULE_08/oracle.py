@@ -3,15 +3,9 @@ import sys
 from dotenv import load_dotenv
 
 def load_matrix_config() -> dict[str, str]:
-    """
-    Loads environment variables and returns a configuration dictionary.
-    Handles exceptions if the configuration stream is corrupted.
-    """
     try:
-        # load_dotenv() looks for a .env file and loads its variables into os.environ
         loaded = load_dotenv()
 
-        # We fetch the required variables, providing safe fallbacks if missing
         config: dict[str, str] = {
             "MATRIX_MODE": os.getenv("MATRIX_MODE", "unconfigured"),
             "DATABASE_URL": os.getenv("DATABASE_URL", "none"),
@@ -21,7 +15,6 @@ def load_matrix_config() -> dict[str, str]:
             "ENV_LOADED": str(loaded)
         }
 
-        # Exception handling to protect the pipeline from running without core configs
         if config["MATRIX_MODE"] == "unconfigured":
             raise ValueError("MATRIX_MODE is missing. System unstable.")
 
@@ -33,11 +26,9 @@ def load_matrix_config() -> dict[str, str]:
 
 
 def display_oracle_status(config: dict[str, str]) -> None:
-    """Displays the configuration status based on the environment mode."""
     print("ORACLE STATUS: Reading the Matrix...")
     print("Configuration loaded:")
 
-    # Showcase the difference between development and production modes
     mode = config["MATRIX_MODE"]
     print(f"Mode: {mode}")
 
@@ -66,7 +57,6 @@ def display_oracle_status(config: dict[str, str]) -> None:
 
 
 def main() -> None:
-    """Main execution sequence."""
     config = load_matrix_config()
     display_oracle_status(config)
 
